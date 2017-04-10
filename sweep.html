@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Sweep Counterparty Paperwallet</title>
+    <link href="project/styles.css" rel="stylesheet">
+	<script src="settings/general.txt"></script>
+	<script src="settings/assets.txt"></script>
+    <script src="settings/asset_list.txt"></script>
+	<script src="lib/jquery/jquery-2.1.4.js"></script>
+	<script src="lib/cryptojs v3.1.2/rollups/aes.js"></script>
+	<script src="lib/cryptojs v3.1.2/rollups/sha256.js"></script>
+	<script src="lib/seedrandom/seedrandom.min.js"></script>
+	<script src="lib/bitcore/bitcore.min.js"></script>
+	<script src="lib/xcp-toolbox/passphrase.js"></script>
+	<script src="lib/xcp-toolbox/password.js"></script>
+	<script src="lib/xcp-toolbox/api.js"></script>
+	<script src="lib/xcp-toolbox/misc.js"></script>
+	<script src="lib/qrcodejs/qrcode.js"></script>
+    <script src="lib/chrome-wallet-mod/tipsplash.js"></script>
+	<script src="lib/chrome-wallet-mod/issueticker.js"></script>
+	<script src="lib/chrome-wallet-mod/js/mnemonic.js"></script>
+	<script src="lib/chrome-wallet-mod/js/utxo.js"></script>
+	<script src="lib/chrome-wallet-mod/js/xcp-js/transactions.js"></script>
+	<script src="lib/chrome-wallet-mod/js/xcp-js/issuance.js"></script>
+	<script src="lib/chrome-wallet-mod/js/xcp-js/rc4.js"></script>
+	<script src="lib/chrome-wallet-mod/js/xcp-js/convert-type.js"></script>
+	<script src="lib/chrome-wallet-mod/js/xcp-js/decode.js"></script>
+	<script src="lib/chrome-wallet-mod/js/biginteger.js"></script>
+	<script src="lib/chrome-wallet-mod/js/hex2dec-cs.js"></script>
+	<!--<script src="lib/chrome-wallet-mod/js/brainlite.js"></script>-->
+	<script src="lib/chrome-wallet-mod/js/bitcoinsig.js"></script>
+	<script src="lib/chrome-wallet-mod/js/bitcoinjs-min.js"></script>
+	<script src="lib/chrome-wallet-mod/js/detect.js"></script>
+	<script src="project/step1passphrase.js"></script>
+	<script src="project/step2privkey.js"></script>
+    
+<script>
+var sendAddress = "";
+function sendTx() {
+    var privKey = document.getElementById('privatekey').value;
+    var assetName = document.getElementById('asset').value;
+    var assetAmount = document.getElementById('assetamount').value;
+    var recipient = document.getElementById('recipient').value;
+    var btcDust = document.getElementById('btcdust').value;
+    var btcFee = document.getElementById('btcfee').value;
+    var sendFrom = privKeyToAddress(privKey);
+    
+    //sendXCP_opreturn_privkey(add_from, add_to, asset, asset_total, btc_total, transfee, privkey, feedbackdiv, check_asset_balance);
+    sendXCP_opreturn_privkey(sendFrom, recipient, assetName, assetAmount, btcDust, btcFee, privKey, "sendfeedback", true);
+    document.getElementById('sendbutton').disabled = true;
+}    
+
+function enableButton() {
+    document.getElementById('sendbutton').disabled = false;
+}
+function displayBtcAmounts() {
+    mBtcFee();
+    mBtcDust();
+    btcSum();
+}
+function mBtcFee() {
+ var fee = document.getElementById('btcfee').value;
+ fee = fee * 1000;
+ document.getElementById('mbtcfee').innerHTML = "("+fee.toFixed(2)+" mBTC)";
+}
+function mBtcDust() {
+ var dust = document.getElementById('btcdust').value;
+ dust = dust * 1000;
+ document.getElementById('mbtcdust').innerHTML = "("+dust.toFixed(2)+" mBTC)";
+}
+function btcSum() {
+ var fee = document.getElementById('btcfee').value;
+ var dust = document.getElementById('btcdust').value;
+ var sum = Number(fee) + Number(dust);
+ document.getElementById('btcsum').innerHTML = sum.toFixed(8)+" BTC";
+}
+</script>
+</head>
+<body onload="displayBtcAmounts();">
+<div id="container">
+    
+<h1>Sweep Counterparty Paper Wallet</h1>
+<h3>Send Asset to Bitcoin Address</h3><br>
+    
+<hr>
+<h3>Paperwallet Private Key</h3>
+Insert the PRIVATE KEY of the address to use<br>
+<input type="text" onkeyup="preparePrivKey()" id="privatekey" placeholder="PRIVATE KEY" style="width:545px;"><br><br>
+<div id="privkeyfeedback">&nbsp;</div>
+
+<hr>
+<h3>Asset to Sweep</h3>
+Send this asset<br>
+<input type="text" id="asset" value="SJCX" style="width:100px;" onchange="enableButton()"><br><br>
+
+<hr>
+<h3>Send Asset Quantity</h3>
+<i>Tip: Click the CounterpartyChain link to view your balance</i><br>
+<input type="text" id="assetamount" style="width:150px;" onchange="enableButton()"><br><br>    
+
+<hr>
+<h3>Recipient Address</h3>
+Send the asset to this address<br>
+<input type="text" id="recipient" placeholder="BITCOIN ADDRESS" style="width:545px;"  onchange="enableButton()"><br><br>
+
+<hr>
+<h3>BTC Dust</h3>
+    Bitcoin dust to recipient<br><i>Leave as is unless you know what you're doing. See documentation below</i><br>
+<input type="number" id="btcdust" value="0.00005470" style="width:150px;" onchange="displayBtcAmounts()" step="0.00000001"> BTC <i><span id="mbtcdust"></span></i><br><br>
+    
+<hr>
+<h3>BTC Miner Fee</h3>
+    Bitcoin fee to miners<br>
+<input type="number" id="btcfee" value="0.00025000" style="width:150px;" onchange="displayBtcAmounts()" step="0.00001"> BTC <i><span id="mbtcfee"></span></i><br><br>
+<i>Dust + Fee = <span id="btcsum"></span></i><br><br>
+    
+<hr>
+<br>
+<button id="sendbutton" type="button" class="button" onclick="sendTx();">SEND ASSET</button><br>
+<div id="sendfeedback">&nbsp;</div><br><br>
+    
+<hr>
+<h3>Tips</h3>
+<ul>
+  <li>The send relies on several API's. An error will occur if one of them is down. Please try again after a few hours.</li>
+  <li>After you send, open Blocktrail or Blockchain.info to monitor the transaction</li>
+  <li>It is prone to remain unconfirmed for a while</li>
+  <li>Transaction take time to confirm. Several hours is normal; even days in extreme cases</li>
+  <li>Please be patient. Don't worry, as long as you can view the unconfirmed transaction, it will get confirmed eventually</li>
+  <li>If you want to sweep several assets, you better wait for the first to confirm before you sweep the second</li>
+  <li>The 'BTC Dust' is the amount of Bitcoin to send along with the asset. If you want to empty the paperwallet completely, it's a good idea to increase the dust such that dust+fee equals the address' bitcoin balance</li>
+</ul>  
+
+
+</div>
+</body>
+</html>

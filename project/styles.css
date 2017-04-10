@@ -1,0 +1,61 @@
+body {
+	background-color:Khaki;
+	padding:7px 0px 0px 0px; /*top right bottom left*/
+    color:Navy;
+    font-family: "Lucida Console", Monaco, monospace;
+}
+hr {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, Cornsilk, Navy, Navy, Cornsilk);
+    margin:15px 0px 15px 0px; /*top right bottom left*/
+}
+h1 {
+    font-size: 30px;
+	letter-spacing: 1px;
+	margin:5px 0px 5px 0px; /*top right bottom left*/
+    font-weight: bold;
+    text-align: left;
+}
+h2 {
+    font-size: 20px;
+	letter-spacing: 1px;
+	margin:2px 0px -3px 0px; /*top right bottom left*/
+    font-weight: bold;
+}
+h3 {
+    font-size: 17px;
+	letter-spacing: 1px;
+	margin:9px 0px 2px 0px; /*top right bottom left*/
+    font-weight: bold;
+}
+#container {
+	width:760px;
+	background-color:Cornsilk;
+	margin-left: auto;
+	margin-right: auto;
+	//font-family: Helvetica, sans-serif;
+	border-radius: 5px;
+    border: 3px solid DarkGoldenRod; 
+    padding: 25px;
+}
+    input {
+        width:100px;
+    }
+.info {
+    font-size:10px;
+    font-style: italic;
+}
+.button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+.button:disabled {
+    background-color: #CCCCCC; /* Gray */
+}

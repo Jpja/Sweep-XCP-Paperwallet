@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Passphrase To Addresses</title>
+    <link href="project/styles.css" rel="stylesheet">
+	<script src="lib/bitcore/bitcore.js"></script>
+	<script src="project/settings.js"></script>
+	<script src="project/misc.js"></script>
+	<script src="project/step1passphrase.js"></script>
+	<script src="project/step2privkey.js"></script>
+</head>
+<body onload="drawMenus();firstEntropy();">
+<div id="container">
+    
+<h2>Passphrase to Addresses &amp; Private Keys</h2><br><br>
+Insert the 12-word passphrase<br><br>
+<input type="text" onkeyup="preparePP()" id="passphrase" placeholder="PASSPHRASE" style="width:545px;"><br>
+<div id="ppfeedback">&nbsp;</div>
+
+
+</div>
+</body>
+</html>
