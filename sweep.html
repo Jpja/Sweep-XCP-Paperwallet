@@ -49,14 +49,14 @@ function sendTx() {
     var btcFee = document.getElementById('btcfee').value;
     var sendFrom = privKeyToAddress(privKey);
     
-	var check_balance = true;
+	var check_bal = true;
 	if (assetAmount == "MAX") {
 		assetAmount = max_amount;
-		check_balance = false;
+		check_bal = false;
 	}
 	
     //sendXCP_opreturn_privkey(add_from, add_to, asset, asset_total, btc_total, transfee, privkey, feedbackdiv, check_asset_balance);
-    sendXCP_opreturn_privkey(sendFrom, recipient, assetName, assetAmount, btcDust, btcFee, privKey, "sendfeedback", check_balance);
+    sendXCP_opreturn_privkey(sendFrom, recipient, assetName, assetAmount, btcDust, btcFee, privKey, "sendfeedback", check_bal);
     document.getElementById('sendbutton').disabled = true;
 }    
 
