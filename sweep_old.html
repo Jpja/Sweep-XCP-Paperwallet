@@ -37,9 +37,6 @@
     
 <script>
 var sendAddress = "";
-var btc_usd = 2500; //price today 2017/6/19
-var tx_size = 280; //typical size but can be much bigger if many inputs
-var max_amount = 9007199254740991; //max js safe amount .. TODO max CP amount
 function sendTx() {
     var privKey = document.getElementById('privatekey').value;
     var assetName = document.getElementById('asset').value;
@@ -49,14 +46,8 @@ function sendTx() {
     var btcFee = document.getElementById('btcfee').value;
     var sendFrom = privKeyToAddress(privKey);
     
-	var check_balance = true;
-	if (assetAmount == "MAX") {
-		assetAmount = max_amount;
-		check_balance = false;
-	}
-	
     //sendXCP_opreturn_privkey(add_from, add_to, asset, asset_total, btc_total, transfee, privkey, feedbackdiv, check_asset_balance);
-    sendXCP_opreturn_privkey(sendFrom, recipient, assetName, assetAmount, btcDust, btcFee, privKey, "sendfeedback", check_balance);
+    sendXCP_opreturn_privkey(sendFrom, recipient, assetName, assetAmount, btcDust, btcFee, privKey, "sendfeedback", true);
     document.getElementById('sendbutton').disabled = true;
 }    
 
@@ -64,8 +55,8 @@ function enableButton() {
     document.getElementById('sendbutton').disabled = false;
 }
 function displayBtcAmounts() {
-    feeInfo();
-    dustInfo();
+    mBtcFee();
+    mBtcDust();
     btcSum();
 }
 function mBtcFee() {
@@ -73,39 +64,27 @@ function mBtcFee() {
  fee = fee * 1000;
  document.getElementById('mbtcfee').innerHTML = "("+fee.toFixed(2)+" mBTC)";
 }
-function feeInfo() {
- var fee = document.getElementById('btcfee').value;
- var fee_usd = fee * btc_usd;
- var satb = (fee * 100000000) / tx_size;
- document.getElementById('mbtcfee').innerHTML = "(~$"+fee_usd.toFixed(2)+"; ~"+satb.toFixed(0)+" sat/byte)";
-}
 function mBtcDust() {
  var dust = document.getElementById('btcdust').value;
  dust = dust * 1000;
  document.getElementById('mbtcdust').innerHTML = "("+dust.toFixed(2)+" mBTC)";
 }
-function dustInfo() {
- var dust = document.getElementById('btcdust').value;
- var dust_usd = dust * btc_usd;
- document.getElementById('mbtcdust').innerHTML = "(~$"+dust_usd.toFixed(2)+" assuming $"+btc_usd+" per Bitcoin)";
-}
 function btcSum() {
  var fee = document.getElementById('btcfee').value;
  var dust = document.getElementById('btcdust').value;
  var sum = Number(fee) + Number(dust);
- var sum_usd = sum * btc_usd;
- document.getElementById('btcsum').innerHTML = sum.toFixed(8)+" BTC ~= $"+sum_usd.toFixed(2);
+ document.getElementById('btcsum').innerHTML = sum.toFixed(8)+" BTC";
 }
 </script>
 </head>
 <body onload="displayBtcAmounts();">
 <div id="container">
     
-<h1>Sweep Counterparty Asset</h1>
-<h3>Send XCP or Asset to Bitcoin Address</h3><br>
+<h1>Sweep Counterparty Paper Wallet</h1>
+<h3>Send Asset to Bitcoin Address</h3><br>
     
 <hr>
-<h3>Your Private Key</h3>
+<h3>Paperwallet Private Key</h3>
 Insert the PRIVATE KEY of the address to use<br>
 <input type="text" onkeyup="preparePrivKey()" id="privatekey" placeholder="PRIVATE KEY" style="width:545px;"><br><br>
 <div id="privkeyfeedback">&nbsp;</div>
@@ -117,8 +96,8 @@ Send this asset<br>
 
 <hr>
 <h3>Send Asset Quantity</h3>
-<i>MAX transfers entire balance. Insert a number to specify amount</i><br>
-<input type="text" id="assetamount" value="MAX" style="width:150px;" onchange="enableButton()"><br><br>    
+<i>Tip: Click the CounterpartyChain link to view your balance</i><br>
+<input type="text" id="assetamount" style="width:150px;" onchange="enableButton()"><br><br>    
 
 <hr>
 <h3>Recipient Address</h3>
@@ -133,7 +112,7 @@ Send the asset to this address<br>
 <hr>
 <h3>BTC Miner Fee</h3>
     Bitcoin fee to miners<br>
-<input type="number" id="btcfee" value="0.00050000" style="width:150px;" onchange="displayBtcAmounts()" step="0.00001"> BTC <i><span id="mbtcfee"></span></i><br><br>
+<input type="number" id="btcfee" value="0.00025000" style="width:150px;" onchange="displayBtcAmounts()" step="0.00001"> BTC <i><span id="mbtcfee"></span></i><br><br>
 <i>Dust + Fee = <span id="btcsum"></span></i><br><br>
     
 <hr>
@@ -141,8 +120,6 @@ Send the asset to this address<br>
 <button id="sendbutton" type="button" class="button" onclick="sendTx();">SEND ASSET</button><br>
 <div id="sendfeedback">&nbsp;</div><br><br>
     
-<hr>
-<i>Donation Address : 1ABvtcK7neZXeQiyX2EPEo14zhhwLgphWZ</i>
 <hr>
 <h3>Tips</h3>
 <ul>
@@ -154,6 +131,8 @@ Send the asset to this address<br>
   <li>If you want to sweep several assets, you better wait for the first to confirm before you sweep the second</li>
   <li>The 'BTC Dust' is the amount of Bitcoin to send along with the asset. If you want to empty the paperwallet completely, it's a good idea to increase the dust such that dust+fee equals the address' bitcoin balance</li>
 </ul>
+<br>
+<i>Bounty Address : 1ABvtcK7neZXeQiyX2EPEo14zhhwLgphWZ</i>
 
 
 </div>
