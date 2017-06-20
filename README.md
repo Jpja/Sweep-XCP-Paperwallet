@@ -36,11 +36,11 @@ If you want to sweep your address completely, i.e. you have ONE asset and bitcoi
 
 ## BTC Miner Fee
 
-To help you set a reasonable fee, the fee is converted to a USD equivilant and an estimated cost in satoshis / byte. 
+To help you set a reasonable fee, the fee is converted to a USD equivalent and an estimated cost in satoshis / byte. 
 
 The USD amount is estimated at a price of $2500 per bitcoin, not the current price. Change parameter `btc_usd` in source file to adjust this.
 
-The estimated satoshis / byte assumes a transaction size of 280 bytes. Under some conditions your sweep transaction may be much larger. What happens then is that the real sat/byte ratio will be much lower and the transaction will take time to propagnate.
+The estimated satoshis / byte assumes a transaction size of 280 bytes. Under some conditions your sweep transaction may be much larger. What happens then is that the real sat/byte ratio will be much lower and the transaction will take time to propagate.
  
 I've put the default fee high enough so it will go through no matter what, though in extreme cases some hours or even days of waiting should be expected.
 
@@ -56,3 +56,4 @@ I've put the default fee high enough so it will go through no matter what, thoug
 
 * In rare cases the transaction is a `SUCCESS` but it won't show in block explorer. Wait a minute and check out several block explorers. If just one of them shows it, it's all good. Your transaction is out there waiting to confirm. If you cannot find your transaction anywhere, it has been rejected across the board. Try again, but with a higher fee.  
 
+* Donation Address : 1ABvtcK7neZXeQiyX2EPEo14zhhwLgphWZ
