@@ -39,7 +39,7 @@
 var sendAddress = "";
 var btc_usd = 2500; //price today 2017/6/19
 var tx_size = 280; //typical size but can be much bigger if many inputs
-var max_amount = 9007199254740991; //max js safe amount .. TODO max CP amount
+var max_amount = 100000000000000; //100 trillion indivisible, 1 million divisible - even higher may be possible, but the highest safe int (9007199254740991) didn't work for divisible ... sent only a few satoshis
 function sendTx() {
     var privKey = document.getElementById('privatekey').value;
     var assetName = document.getElementById('asset').value;
