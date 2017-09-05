@@ -34,7 +34,7 @@
 	<script src="lib/chrome-wallet-mod/js/detect.js"></script>
 	<script src="project/step1passphrase.js"></script>
 	<script src="project/step2privkey.js"></script>
-    
+
 <script>
 var sendAddress = "";
 var btc_usd = 2500; //price today 2017/6/19
@@ -48,17 +48,17 @@ function sendTx() {
     var btcDust = document.getElementById('btcdust').value;
     var btcFee = document.getElementById('btcfee').value;
     var sendFrom = privKeyToAddress(privKey);
-    
+
 	var check_bal = true;
 	if (assetAmount == "MAX") {
 		assetAmount = max_amount;
 		check_bal = false;
 	}
-	
+
     //sendXCP_opreturn_privkey(add_from, add_to, asset, asset_total, btc_total, transfee, privkey, feedbackdiv, check_asset_balance);
     sendXCP_opreturn_privkey(sendFrom, recipient, assetName, assetAmount, btcDust, btcFee, privKey, "sendfeedback", check_bal);
     document.getElementById('sendbutton').disabled = true;
-}    
+}
 
 function enableButton() {
     document.getElementById('sendbutton').disabled = false;
@@ -100,25 +100,25 @@ function btcSum() {
 </head>
 <body onload="displayBtcAmounts();">
 <div id="container">
-    
+
 <h1>Sweep Counterparty Asset</h1>
-<h3>Send XCP or Asset to Bitcoin Address</h3><br>
-    
+<h3>Send XCP or other asset to a Bitcoin address</h3><br>
+
 <hr>
 <h3>Your Private Key</h3>
-Insert the PRIVATE KEY of the address to use<br>
+Insert the PRIVATE KEY of the address to sweep from<br>
 <input type="text" onkeyup="preparePrivKey()" id="privatekey" placeholder="PRIVATE KEY" style="width:545px;"><br><br>
 <div id="privkeyfeedback">&nbsp;</div>
 
 <hr>
-<h3>Asset to Sweep</h3>
-Send this asset<br>
-<input type="text" id="asset" value="SJCX" style="width:100px;" onchange="enableButton()"><br><br>
+<h3>Asset Type to Sweep</h3>
+You can find the name by searching your public address <a href="https://counterpartychain.io/">here</a><br>
+<input type="text" id="asset" value="SJCX" style="width:150px;" onchange="enableButton()"><br><br>
 
 <hr>
 <h3>Send Asset Quantity</h3>
-<i>MAX transfers entire balance. Insert a number to specify amount</i><br>
-<input type="text" id="assetamount" value="MAX" style="width:150px;" onchange="enableButton()"><br><br>    
+<i>MAX transfers entire balance, or insert a number to specify amount</i><br>
+<input type="text" id="assetamount" value="MAX" style="width:150px;" onchange="enableButton()"><br><br>
 
 <hr>
 <h3>Recipient Address</h3>
@@ -127,34 +127,34 @@ Send the asset to this address<br>
 
 <hr>
 <h3>BTC Dust</h3>
-    Bitcoin dust to recipient<br><i>Leave as is unless you know what you're doing. See documentation below</i><br>
+Bitcoin dust to recipient<br><i>Leave as is unless you know what you're doing. See documentation below</i><br>
 <input type="number" id="btcdust" value="0.00005470" style="width:150px;" onchange="displayBtcAmounts()" step="0.00000001"> BTC <i><span id="mbtcdust"></span></i><br><br>
-    
+
 <hr>
 <h3>BTC Miner Fee</h3>
-    Bitcoin fee to miners<br>
+Bitcoin fee to miners<br>
 <input type="number" id="btcfee" value="0.00050000" style="width:150px;" onchange="displayBtcAmounts()" step="0.00001"> BTC <i><span id="mbtcfee"></span></i><br><br>
 <i>Dust + Fee = <span id="btcsum"></span></i><br><br>
-    
+
 <hr>
 <br>
 <button id="sendbutton" type="button" class="button" onclick="sendTx();">SEND ASSET</button><br>
 <div id="sendfeedback">&nbsp;</div><br><br>
-    
+
 <hr>
-<i>Donation Address : 1ABvtcK7neZXeQiyX2EPEo14zhhwLgphWZ</i>
+<i>Donation Address: 1ABvtcK7neZXeQiyX2EPEo14zhhwLgphWZ</i>
+
 <hr>
 <h3>Tips</h3>
 <ul>
-  <li>The send relies on several API's. An error will occur if one of them is down. Please try again after a few hours.</li>
+  <li>The send relies on several APIs. An error will occur if one of them is down. Please try again after a few hours.</li>
   <li>After you send, open Blocktrail or Blockchain.info to monitor the transaction</li>
   <li>It is prone to remain unconfirmed for a while</li>
-  <li>Transaction take time to confirm. Several hours is normal; even days in extreme cases</li>
-  <li>Please be patient. Don't worry, as long as you can view the unconfirmed transaction, it will get confirmed eventually</li>
-  <li>If you want to sweep several assets, you better wait for the first to confirm before you sweep the second</li>
+  <li>Transactions take time to confirm. Several hours is normal; even days in extreme cases. Including higher miner fees may help speed this up.</li>
+  <li>Please be patient. Don't worry, as long as you can view the unconfirmed transaction on any site, it will get confirmed eventually</li>
+  <li>If you want to sweep several assets, you should wait for the first to confirm before you sweep the second</li>
   <li>The 'BTC Dust' is the amount of Bitcoin to send along with the asset. If you want to empty the paperwallet completely, it's a good idea to increase the dust such that dust+fee equals the address' bitcoin balance</li>
 </ul>
-
 
 </div>
 </body>
