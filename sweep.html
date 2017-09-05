@@ -107,7 +107,7 @@ function btcSum() {
 <hr>
 <h3>Your Private Key</h3>
 Insert the PRIVATE KEY of the address to sweep from<br>
-<input type="text" onkeyup="preparePrivKey()" id="privatekey" placeholder="PRIVATE KEY" style="width:545px;"><br><br>
+<input type="text" onkeyup="preparePrivKey()" id="privatekey" placeholder="PRIVATE KEY" style="width:545px;" onchange="enableButton()"><br><br>
 <div id="privkeyfeedback">&nbsp;</div>
 
 <hr>
@@ -123,17 +123,17 @@ You can find the name by searching your public address <a href="https://counterp
 <hr>
 <h3>Recipient Address</h3>
 Send the asset to this address<br>
-<input type="text" id="recipient" placeholder="BITCOIN ADDRESS" style="width:545px;"  onchange="enableButton()"><br><br>
+<input type="text" id="recipient" placeholder="BITCOIN ADDRESS" style="width:545px;" onchange="enableButton()"><br><br>
 
 <hr>
 <h3>BTC Dust</h3>
 Bitcoin dust to recipient<br><i>Leave as is unless you know what you're doing. See documentation below</i><br>
-<input type="number" id="btcdust" value="0.00005470" style="width:150px;" onchange="displayBtcAmounts()" step="0.00000001"> BTC <i><span id="mbtcdust"></span></i><br><br>
+<input type="number" id="btcdust" value="0.00005470" style="width:150px;" onchange="displayBtcAmounts(); enableButton()" step="0.00000001"> BTC <i><span id="mbtcdust"></span></i><br><br>
 
 <hr>
 <h3>BTC Miner Fee</h3>
 Bitcoin fee to miners<br>
-<input type="number" id="btcfee" value="0.00050000" style="width:150px;" onchange="displayBtcAmounts()" step="0.00001"> BTC <i><span id="mbtcfee"></span></i><br><br>
+<input type="number" id="btcfee" value="0.00050000" style="width:150px;" onchange="displayBtcAmounts(); enableButton()" step="0.00001"> BTC <i><span id="mbtcfee"></span></i><br><br>
 <i>Dust + Fee = <span id="btcsum"></span></i><br><br>
 
 <hr>
