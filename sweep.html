@@ -41,6 +41,8 @@ var btc_usd = 2500; //price today 2017/6/19
 var tx_size = 280; //typical size but can be much bigger if many inputs
 var max_amount = 100000000; //100 million tokens - even higher may be possible, TODO check higest allowed
 function sendTx() {
+    document.getElementById('sendbutton').disabled = true;
+
     var privKey = document.getElementById('privatekey').value;
     var assetName = document.getElementById('asset').value;
     var assetAmount = document.getElementById('assetamount').value;
@@ -57,9 +59,7 @@ function sendTx() {
 
     //sendXCP_opreturn_privkey(add_from, add_to, asset, asset_total, btc_total, transfee, privkey, feedbackdiv, check_asset_balance);
     sendXCP_opreturn_privkey(sendFrom, recipient, assetName, assetAmount, btcDust, btcFee, privKey, "sendfeedback", check_bal);
-    document.getElementById('sendbutton').disabled = true;
 }
-
 function enableButton() {
     document.getElementById('sendbutton').disabled = false;
 }
@@ -69,32 +69,32 @@ function displayBtcAmounts() {
     btcSum();
 }
 function mBtcFee() {
- var fee = document.getElementById('btcfee').value;
- fee = fee * 1000;
- document.getElementById('mbtcfee').innerHTML = "("+fee.toFixed(2)+" mBTC)";
+    var fee = document.getElementById('btcfee').value;
+    fee = fee * 1000;
+    document.getElementById('mbtcfee').innerHTML = "("+fee.toFixed(2)+" mBTC)";
 }
 function feeInfo() {
- var fee = document.getElementById('btcfee').value;
- var fee_usd = fee * btc_usd;
- var satb = (fee * 100000000) / tx_size;
- document.getElementById('mbtcfee').innerHTML = "(~$"+fee_usd.toFixed(2)+"; ~"+satb.toFixed(0)+" sat/byte)";
+    var fee = document.getElementById('btcfee').value;
+    var fee_usd = fee * btc_usd;
+    var satb = (fee * 100000000) / tx_size;
+    document.getElementById('mbtcfee').innerHTML = "(~$"+fee_usd.toFixed(2)+"; ~"+satb.toFixed(0)+" sat/byte)";
 }
 function mBtcDust() {
- var dust = document.getElementById('btcdust').value;
- dust = dust * 1000;
- document.getElementById('mbtcdust').innerHTML = "("+dust.toFixed(2)+" mBTC)";
+    var dust = document.getElementById('btcdust').value;
+    dust = dust * 1000;
+    document.getElementById('mbtcdust').innerHTML = "("+dust.toFixed(2)+" mBTC)";
 }
 function dustInfo() {
- var dust = document.getElementById('btcdust').value;
- var dust_usd = dust * btc_usd;
- document.getElementById('mbtcdust').innerHTML = "(~$"+dust_usd.toFixed(2)+" assuming $"+btc_usd+" per Bitcoin)";
+    var dust = document.getElementById('btcdust').value;
+    var dust_usd = dust * btc_usd;
+    document.getElementById('mbtcdust').innerHTML = "(~$"+dust_usd.toFixed(2)+" assuming $"+btc_usd+" per Bitcoin)";
 }
 function btcSum() {
- var fee = document.getElementById('btcfee').value;
- var dust = document.getElementById('btcdust').value;
- var sum = Number(fee) + Number(dust);
- var sum_usd = sum * btc_usd;
- document.getElementById('btcsum').innerHTML = sum.toFixed(8)+" BTC ~= $"+sum_usd.toFixed(2);
+    var fee = document.getElementById('btcfee').value;
+    var dust = document.getElementById('btcdust').value;
+    var sum = Number(fee) + Number(dust);
+    var sum_usd = sum * btc_usd;
+    document.getElementById('btcsum').innerHTML = sum.toFixed(8)+" BTC ~= $"+sum_usd.toFixed(2);
 }
 </script>
 </head>
